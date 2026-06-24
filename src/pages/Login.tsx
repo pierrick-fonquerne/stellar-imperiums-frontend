@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -18,6 +18,8 @@ type LoginFormValues = z.infer<typeof loginSchema>
 export function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const notice = (location.state as { notice?: string } | null)?.notice ?? null
   const [authError, setAuthError] = useState<string | null>(null)
 
   const {
@@ -79,6 +81,7 @@ export function Login() {
               <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
             )}
           </div>
+          {notice && <p className="mb-4 text-sm text-green-400">{notice}</p>}
           {authError && (
             <p className="mb-4 text-sm text-red-400">{authError}</p>
           )}

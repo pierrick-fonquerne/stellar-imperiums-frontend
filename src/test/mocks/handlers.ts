@@ -36,4 +36,12 @@ export const handlers = [
   http.post('*/v1/auth/logout', () => {
     return new HttpResponse(null, { status: 204 })
   }),
+
+  http.post('*/v1/auth/forgot-password', () => {
+    return new HttpResponse(null, { status: 202 })
+  }),
+
+  http.post('*/v1/auth/reset-password', () => {
+    return new HttpResponse(null, { status: 204 })
+  }),
 ]

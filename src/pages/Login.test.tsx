@@ -85,4 +85,29 @@ describe('Login', () => {
       expect(screen.getByText('Identifiants invalides')).toBeInTheDocument()
     })
   })
+
+  it('affiche le message de confirmation apres reinitialisation du mot de passe', () => {
+    server.use(
+      http.post('*/v1/auth/refresh', () => new HttpResponse(null, { status: 401 })),
+    )
+    render(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: '/login',
+            state: { notice: 'Mot de passe modifié, vous pouvez vous connecter.' },
+          },
+        ]}
+      >
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </AuthProvider>
+      </MemoryRouter>,
+    )
+    expect(
+      screen.getByText('Mot de passe modifié, vous pouvez vous connecter.'),
+    ).toBeInTheDocument()
+  })
 })
