@@ -35,6 +35,8 @@ export function ResetPassword() {
   } = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
   })
+  // react-hook-form gère son propre suivi réactif : faux positif du lint React Compiler.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const password = watch('newPassword') ?? ''
 
   if (!token) {
